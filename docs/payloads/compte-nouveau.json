@@ -1,0 +1,10 @@
+{
+  "numeroCompte": "BQ-2026-000201",
+  "titulaire": "Amine Cherkaoui",
+  "agence": "Agadir Talborjt",
+  "solde": 18500.50,
+  "devise": "MAD",
+  "dateCreation": "2024-11-01",
+  "type": "COURANT",
+  "actif": true
+}

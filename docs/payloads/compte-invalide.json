@@ -1,0 +1,10 @@
+{
+  "numeroCompte": "BQ-2026-000299",
+  "titulaire": "Test Negatif",
+  "agence": "Agence Test",
+  "solde": -5,
+  "devise": "MAD",
+  "dateCreation": "2024-11-01",
+  "type": "COURANT",
+  "actif": true
+}

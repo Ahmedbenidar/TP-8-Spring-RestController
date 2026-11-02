@@ -1,0 +1,486 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "API Banque - Spring RestController",
+    "description" : "Gestion des comptes bancaires en JSON et XML : consultation, creation, mise a jour, changement de statut, suppression et statistiques.",
+    "contact" : {
+      "name" : "Ahmed Benidar",
+      "email" : "ahmed.benidar@example.ma"
+    },
+    "license" : {
+      "name" : "Usage pedagogique - TP 8"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8082",
+    "description" : "Generated server url"
+  } ],
+  "tags" : [ {
+    "name" : "Comptes bancaires",
+    "description" : "CRUD complet, filtres et statistiques - JSON et XML"
+  } ],
+  "paths" : {
+    "/banque/comptes/{id}" : {
+      "get" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Consulter un compte par son identifiant",
+        "operationId" : "consulterCompte",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Compte trouve",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Identifiant inconnu",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Remplacer un compte existant",
+        "operationId" : "remplacerCompte",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Compte"
+              }
+            },
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Compte"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Compte mis a jour",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Identifiant inconnu",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Supprimer un compte",
+        "operationId" : "supprimerCompte",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Compte supprime"
+          },
+          "404" : {
+            "description" : "Identifiant inconnu"
+          }
+        }
+      }
+    },
+    "/banque/comptes" : {
+      "get" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Lister les comptes",
+        "description" : "Filtres optionnels : type, solde min/max, titulaire, actifs seulement",
+        "operationId" : "listerComptes",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "description" : "COURANT, EPARGNE ou PROFESSIONNEL",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "COURANT", "EPARGNE", "PROFESSIONNEL" ]
+          }
+        }, {
+          "name" : "soldeMin",
+          "in" : "query",
+          "description" : "Solde minimum inclus",
+          "required" : false,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "soldeMax",
+          "in" : "query",
+          "description" : "Solde maximum inclus",
+          "required" : false,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "titulaire",
+          "in" : "query",
+          "description" : "Fragment du nom du titulaire",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actifsSeulement",
+          "in" : "query",
+          "description" : "Ne garder que les comptes actifs",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Liste renvoyee en JSON ou en XML",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comptes"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comptes"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Parametre de filtre invalide",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comptes"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comptes"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Creer un compte",
+        "description" : "Corps en JSON ou en XML. Reponse 201 avec l'en-tete Location.",
+        "operationId" : "creerCompte",
+        "requestBody" : {
+          "content" : {
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Compte"
+              }
+            },
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Compte"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Donnees invalides",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Compte cree",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banque/comptes/{id}/statut" : {
+      "patch" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Activer ou desactiver un compte",
+        "operationId" : "changerStatut",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "actif",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banque/comptes/statistiques" : {
+      "get" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Indicateurs agreges sur l'ensemble des comptes",
+        "operationId" : "statistiques",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StatistiquesBanque"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StatistiquesBanque"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banque/comptes/reference/{numero}" : {
+      "get" : {
+        "tags" : [ "Comptes bancaires" ],
+        "summary" : "Consulter un compte par sa reference metier",
+        "operationId" : "consulterParReference",
+        "parameters" : [ {
+          "name" : "numero",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Compte"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Compte" : {
+        "required" : [ "dateCreation", "numeroCompte", "solde", "titulaire", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "numeroCompte" : {
+            "maxLength" : 24,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "titulaire" : {
+            "maxLength" : 80,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "agence" : {
+            "maxLength" : 40,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "solde" : {
+            "type" : "number"
+          },
+          "devise" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "string"
+          },
+          "dateCreation" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "COURANT", "EPARGNE", "PROFESSIONNEL" ]
+          },
+          "actif" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Comptes" : {
+        "type" : "object",
+        "properties" : {
+          "compte" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Compte"
+            }
+          }
+        }
+      },
+      "StatistiquesBanque" : {
+        "type" : "object",
+        "properties" : {
+          "nombreComptes" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "comptesCourants" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "comptesEpargne" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "comptesProfessionnels" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "soldeTotal" : {
+            "type" : "number"
+          },
+          "soldeMoyen" : {
+            "type" : "number"
+          },
+          "soldeMax" : {
+            "type" : "number"
+          },
+          "totalCourants" : {
+            "type" : "number"
+          },
+          "totalEpargne" : {
+            "type" : "number"
+          },
+          "totalProfessionnels" : {
+            "type" : "number"
+          }
+        }
+      }
+    }
+  }
+}

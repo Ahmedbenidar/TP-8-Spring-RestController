@@ -1,0 +1,185 @@
+﻿
+==============================================================================
+SECTION 1 - GET /banque/comptes (JSON)
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes -w "\n[HTTP %{http_code}]"
+
+{"compte":[{"id":1,"numeroCompte":"BQ-2026-000101","titulaire":"Nadia El Amrani","agence":"Casablanca Anfa","solde":14000.00,"devise":"MAD","dateCreation":"2024-01-15","type":"COURANT","actif":true},{"id":2,"numeroCompte":"BQ-2026-000102","titulaire":"Youssef Bennis","agence":"Rabat Agdal","solde":48200.00,"devise":"MAD","dateCreation":"2023-11-02","type":"EPARGNE","actif":true},{"id":3,"numeroCompte":"BQ-2026-000103","titulaire":"Salma Ouazzani","agence":"Marrakech Gueliz","solde":7300.40,"devise":"MAD","dateCreation":"2024-03-21","type":"COURANT","actif":true},{"id":4,"numeroCompte":"BQ-2026-000104","titulaire":"Karim Tazi","agence":"Fes Ville Nouvelle","solde":15600.00,"devise":"MAD","dateCreation":"2024-06-09","type":"EPARGNE","actif":true},{"id":5,"numeroCompte":"BQ-2026-000105","titulaire":"Hind Berrada","agence":"Tanger Malabata","solde":2227.63,"devise":"MAD","dateCreation":"2025-01-30","type":"PROFESSIONNEL","actif":true},{"id":7,"numeroCompte":"BQ-2026-000202","titulaire":"Leila Mansouri","agence":"Oujda Centre","solde":9200.00,"devise":"MAD","dateCreation":"2024-11-01","type":"EPARGNE","actif":true}]}
+[HTTP 200]
+
+==============================================================================
+SECTION 2 - GET /banque/comptes (XML)
+==============================================================================
+
+> curl.exe -s -H "Accept: application/xml" http://localhost:8082/banque/comptes -w "\n[HTTP %{http_code}]"
+
+<comptes><compte><id>1</id><numeroCompte>BQ-2026-000101</numeroCompte><titulaire>Nadia El Amrani</titulaire><agence>Casablanca Anfa</agence><solde>14000.00</solde><devise>MAD</devise><dateCreation>2024-01-15</dateCreation><type>COURANT</type><actif>true</actif></compte><compte><id>2</id><numeroCompte>BQ-2026-000102</numeroCompte><titulaire>Youssef Bennis</titulaire><agence>Rabat Agdal</agence><solde>48200.00</solde><devise>MAD</devise><dateCreation>2023-11-02</dateCreation><type>EPARGNE</type><actif>true</actif></compte><compte><id>3</id><numeroCompte>BQ-2026-000103</numeroCompte><titulaire>Salma Ouazzani</titulaire><agence>Marrakech Gueliz</agence><solde>7300.40</solde><devise>MAD</devise><dateCreation>2024-03-21</dateCreation><type>COURANT</type><actif>true</actif></compte><compte><id>4</id><numeroCompte>BQ-2026-000104</numeroCompte><titulaire>Karim Tazi</titulaire><agence>Fes Ville Nouvelle</agence><solde>15600.00</solde><devise>MAD</devise><dateCreation>2024-06-09</dateCreation><type>EPARGNE</type><actif>true</actif></compte><compte><id>5</id><numeroCompte>BQ-2026-000105</numeroCompte><titulaire>Hind Berrada</titulaire><agence>Tanger Malabata</agence><solde>2227.63</solde><devise>MAD</devise><dateCreation>2025-01-30</dateCreation><type>PROFESSIONNEL</type><actif>true</actif></compte><compte><id>7</id><numeroCompte>BQ-2026-000202</numeroCompte><titulaire>Leila Mansouri</titulaire><agence>Oujda Centre</agence><solde>9200.00</solde><devise>MAD</devise><dateCreation>2024-11-01</dateCreation><type>EPARGNE</type><actif>true</actif></compte></comptes>
+[HTTP 200]
+
+==============================================================================
+SECTION 3 - GET /banque/comptes/1 (JSON)
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes/1 -w "\n[HTTP %{http_code}]"
+
+{"id":1,"numeroCompte":"BQ-2026-000101","titulaire":"Nadia El Amrani","agence":"Casablanca Anfa","solde":14000.00,"devise":"MAD","dateCreation":"2024-01-15","type":"COURANT","actif":true}
+[HTTP 200]
+
+==============================================================================
+SECTION 4 - GET /banque/comptes/1 (XML)
+==============================================================================
+
+> curl.exe -s -H "Accept: application/xml" http://localhost:8082/banque/comptes/1 -w "\n[HTTP %{http_code}]"
+
+<compte><id>1</id><numeroCompte>BQ-2026-000101</numeroCompte><titulaire>Nadia El Amrani</titulaire><agence>Casablanca Anfa</agence><solde>14000.00</solde><devise>MAD</devise><dateCreation>2024-01-15</dateCreation><type>COURANT</type><actif>true</actif></compte>
+[HTTP 200]
+
+==============================================================================
+SECTION 5 - GET /banque/comptes/9999 -> 404 JSON
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes/9999 -w "\n[HTTP %{http_code}]"
+
+{"code":404,"erreur":"COMPTE_INTROUVABLE","message":"Aucun compte bancaire ne correspond a l'identifiant 9999","chemin":"/banque/comptes/9999","horodatage":"2026-11-02T19:40:44.854859200Z"}
+[HTTP 404]
+
+==============================================================================
+SECTION 6 - GET /banque/comptes?type=EPARGNE
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" "http://localhost:8082/banque/comptes?type=EPARGNE" -w "\n[HTTP %{http_code}]"
+
+{"compte":[{"id":2,"numeroCompte":"BQ-2026-000102","titulaire":"Youssef Bennis","agence":"Rabat Agdal","solde":48200.00,"devise":"MAD","dateCreation":"2023-11-02","type":"EPARGNE","actif":true},{"id":4,"numeroCompte":"BQ-2026-000104","titulaire":"Karim Tazi","agence":"Fes Ville Nouvelle","solde":15600.00,"devise":"MAD","dateCreation":"2024-06-09","type":"EPARGNE","actif":true},{"id":7,"numeroCompte":"BQ-2026-000202","titulaire":"Leila Mansouri","agence":"Oujda Centre","solde":9200.00,"devise":"MAD","dateCreation":"2024-11-01","type":"EPARGNE","actif":true}]}
+[HTTP 200]
+
+==============================================================================
+SECTION 7 - GET /banque/comptes?soldeMin=10000&soldeMax=20000
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" "http://localhost:8082/banque/comptes?soldeMin=10000&soldeMax=20000" -w "\n[HTTP %{http_code}]"
+
+{"compte":[{"id":1,"numeroCompte":"BQ-2026-000101","titulaire":"Nadia El Amrani","agence":"Casablanca Anfa","solde":14000.00,"devise":"MAD","dateCreation":"2024-01-15","type":"COURANT","actif":true},{"id":4,"numeroCompte":"BQ-2026-000104","titulaire":"Karim Tazi","agence":"Fes Ville Nouvelle","solde":15600.00,"devise":"MAD","dateCreation":"2024-06-09","type":"EPARGNE","actif":true}]}
+[HTTP 200]
+
+==============================================================================
+SECTION 8 - GET /banque/comptes?titulaire=ouazzani
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" "http://localhost:8082/banque/comptes?titulaire=ouazzani" -w "\n[HTTP %{http_code}]"
+
+{"compte":[{"id":3,"numeroCompte":"BQ-2026-000103","titulaire":"Salma Ouazzani","agence":"Marrakech Gueliz","solde":7300.40,"devise":"MAD","dateCreation":"2024-03-21","type":"COURANT","actif":true}]}
+[HTTP 200]
+
+==============================================================================
+SECTION 9 - GET /banque/comptes?actifsSeulement=true
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" "http://localhost:8082/banque/comptes?actifsSeulement=true" -w "\n[HTTP %{http_code}]"
+
+{"compte":[{"id":2,"numeroCompte":"BQ-2026-000102","titulaire":"Youssef Bennis","agence":"Rabat Agdal","solde":48200.00,"devise":"MAD","dateCreation":"2023-11-02","type":"EPARGNE","actif":true},{"id":4,"numeroCompte":"BQ-2026-000104","titulaire":"Karim Tazi","agence":"Fes Ville Nouvelle","solde":15600.00,"devise":"MAD","dateCreation":"2024-06-09","type":"EPARGNE","actif":true},{"id":1,"numeroCompte":"BQ-2026-000101","titulaire":"Nadia El Amrani","agence":"Casablanca Anfa","solde":14000.00,"devise":"MAD","dateCreation":"2024-01-15","type":"COURANT","actif":true},{"id":7,"numeroCompte":"BQ-2026-000202","titulaire":"Leila Mansouri","agence":"Oujda Centre","solde":9200.00,"devise":"MAD","dateCreation":"2024-11-01","type":"EPARGNE","actif":true},{"id":3,"numeroCompte":"BQ-2026-000103","titulaire":"Salma Ouazzani","agence":"Marrakech Gueliz","solde":7300.40,"devise":"MAD","dateCreation":"2024-03-21","type":"COURANT","actif":true},{"id":5,"numeroCompte":"BQ-2026-000105","titulaire":"Hind Berrada","agence":"Tanger Malabata","solde":2227.63,"devise":"MAD","dateCreation":"2025-01-30","type":"PROFESSIONNEL","actif":true}]}
+[HTTP 200]
+
+==============================================================================
+SECTION 10 - GET /banque/comptes/reference/BQ-2026-000102
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes/reference/BQ-2026-000102 -w "\n[HTTP %{http_code}]"
+
+{"id":2,"numeroCompte":"BQ-2026-000102","titulaire":"Youssef Bennis","agence":"Rabat Agdal","solde":48200.00,"devise":"MAD","dateCreation":"2023-11-02","type":"EPARGNE","actif":true}
+[HTTP 200]
+
+==============================================================================
+SECTION 11 - GET /banque/comptes/statistiques
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes/statistiques -w "\n[HTTP %{http_code}]"
+
+{"nombreComptes":6,"comptesCourants":2,"comptesEpargne":3,"comptesProfessionnels":1,"soldeTotal":96528.03,"soldeMoyen":16088.01,"soldeMax":48200.00,"totalCourants":21300.40,"totalEpargne":73000.00,"totalProfessionnels":2227.63}
+[HTTP 200]
+
+==============================================================================
+SECTION 12 - POST /banque/comptes (corps JSON) -> 201 + Location
+==============================================================================
+
+> curl.exe -s -D - -X POST http://localhost:8082/banque/comptes -H "Content-Type: application/json" -H "Accept: application/json" -d "@docs/payloads/compte-nouveau.json"
+
+HTTP/1.1 201 
+Location: http://localhost:8082/banque/comptes/8
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 02 Nov 2026 19:40:45 GMT
+
+{"id":8,"numeroCompte":"BQ-2026-000201","titulaire":"Amine Cherkaoui","agence":"Agadir Talborjt","solde":18500.50,"devise":"MAD","dateCreation":"2024-11-01","type":"COURANT","actif":true}
+
+==============================================================================
+SECTION 13 - POST /banque/comptes (corps XML) -> 201 + Location
+==============================================================================
+
+> curl.exe -s -D - -X POST http://localhost:8082/banque/comptes -H "Content-Type: application/xml" -H "Accept: application/xml" -d "@docs/payloads/compte-nouveau.xml"
+
+HTTP/1.1 400 
+Content-Type: application/xml;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 02 Nov 2026 19:40:45 GMT
+Connection: close
+
+<erreur><code>400</code><erreur>ARGUMENT_INVALIDE</erreur><message>La reference BQ-2026-000202 est deja utilisee</message><chemin>/banque/comptes</chemin><horodatage>2026-11-02T19:40:45.399595800Z</horodatage></erreur>
+
+==============================================================================
+SECTION 14 - POST invalide (solde negatif) -> 400
+==============================================================================
+
+> curl.exe -s -X POST http://localhost:8082/banque/comptes -H "Content-Type: application/json" -d "@docs/payloads/compte-invalide.json" -w "\n[HTTP %{http_code}]"
+
+{"code":400,"erreur":"DONNEES_INVALIDES","message":"solde : doit être supérieur ou égal à 0","chemin":"/banque/comptes","horodatage":"2026-11-02T19:40:45.455635200Z"}
+[HTTP 400]
+
+==============================================================================
+SECTION 15 - PUT /banque/comptes/1 (corps JSON)
+==============================================================================
+
+> curl.exe -s -X PUT http://localhost:8082/banque/comptes/1 -H "Content-Type: application/json" -H "Accept: application/json" -d "@docs/payloads/compte-modifie.json" -w "\n[HTTP %{http_code}]"
+
+{"id":1,"numeroCompte":"BQ-2026-000101","titulaire":"Nadia El Amrani","agence":"Casablanca Anfa","solde":14000.00,"devise":"MAD","dateCreation":"2024-01-15","type":"COURANT","actif":true}
+[HTTP 200]
+
+==============================================================================
+SECTION 16 - PATCH /banque/comptes/4/statut?actif=true
+==============================================================================
+
+> curl.exe -s -X PATCH "http://localhost:8082/banque/comptes/4/statut?actif=true" -H "Accept: application/json" -w "\n[HTTP %{http_code}]"
+
+{"id":4,"numeroCompte":"BQ-2026-000104","titulaire":"Karim Tazi","agence":"Fes Ville Nouvelle","solde":15600.00,"devise":"MAD","dateCreation":"2024-06-09","type":"EPARGNE","actif":true}
+[HTTP 200]
+
+==============================================================================
+SECTION 17 - DELETE /banque/comptes/6 -> 204
+==============================================================================
+
+> curl.exe -s -X DELETE http://localhost:8082/banque/comptes/6 -w "\n[HTTP %{http_code}]"
+
+{"code":404,"erreur":"COMPTE_INTROUVABLE","message":"Aucun compte bancaire ne correspond a l'identifiant 6","chemin":"/banque/comptes/6","horodatage":"2026-11-02T19:40:45.664908800Z"}
+[HTTP 404]
+
+==============================================================================
+SECTION 18 - Verification finale : statistiques apres modifications
+==============================================================================
+
+> curl.exe -s -H "Accept: application/json" http://localhost:8082/banque/comptes/statistiques -w "\n[HTTP %{http_code}]"
+
+{"nombreComptes":7,"comptesCourants":3,"comptesEpargne":3,"comptesProfessionnels":1,"soldeTotal":115028.53,"soldeMoyen":16432.65,"soldeMax":48200.00,"totalCourants":39800.90,"totalEpargne":73000.00,"totalProfessionnels":2227.63}
+[HTTP 200]
+
+==============================================================================
+SECTION 19 - Documentation OpenAPI generee par springdoc
+==============================================================================
+
+> curl.exe -s http://localhost:8082/v3/api-docs -w "\n[HTTP %{http_code}]"
+
+
+[HTTP 200]
+
+==============================================================================
+FIN DES TESTS
+==============================================================================

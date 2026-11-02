@@ -1,0 +1,28 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IDE ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+### Logs (mais on garde les logs reels versionnes dans docs/logs) ###
+*.log
+!docs/logs/*.log
+
+### OS ###
+.DS_Store
+Thumbs.db
+desktop.ini
+
+### Divers ###
+*.tmp
+*.bak

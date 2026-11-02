@@ -1,0 +1,10 @@
+{
+  "numeroCompte": "BQ-2026-000101",
+  "titulaire": "Nadia El Amrani",
+  "agence": "Casablanca Anfa",
+  "solde": 14000.00,
+  "devise": "MAD",
+  "dateCreation": "2024-01-15",
+  "type": "COURANT",
+  "actif": true
+}

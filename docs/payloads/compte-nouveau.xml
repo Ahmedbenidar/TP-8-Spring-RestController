@@ -1,0 +1,10 @@
+<compte>
+    <numeroCompte>BQ-2026-000202</numeroCompte>
+    <titulaire>Leila Mansouri</titulaire>
+    <agence>Oujda Centre</agence>
+    <solde>9200.00</solde>
+    <devise>MAD</devise>
+    <dateCreation>2024-11-01</dateCreation>
+    <type>EPARGNE</type>
+    <actif>true</actif>
+</compte>
